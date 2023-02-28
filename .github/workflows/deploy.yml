@@ -23,7 +23,7 @@ jobs:
     - name: install
       run: 
     - name: firebase deploy
-        run: |
-          npx firebase use "okazaki-shogo-website"
-          npx firebase target:apply hosting firebase.json "https://okazaki-shogo-website.web.app"
-          npx firebase deploy --only hosting: firebase.json
+      run: |
+        npx firebase use "okazaki-shogo-website"
+        npx firebase target:apply hosting firebase.json "https://okazaki-shogo-website.web.app"
+        npx firebase deploy --only hosting: firebase.json
