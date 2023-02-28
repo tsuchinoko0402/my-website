@@ -10,18 +10,35 @@ jobs:
       matrix:
         node-version: [18.x]
     steps:
-    - uses: actions/checkout@v2
-    - uses: google-github-actions/auth@v0
-      with:
-        credentials_json: ${{ secrets.CREDENTIAL_JSON }}
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - name: build
-      run: npm run build
-    - name: firebase deploy
-      run: |
-        npx firebase use "okazaki-shogo-website"
-        npx firebase target:apply hosting firebase.json "https://okazaki-shogo-website.web.app"
-        npx firebase deploy --only hosting: firebase.json
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install Dependencies
+        run: npm install
+      - name: Build
+        run: npm run build
+      - name: Archive Production Artifact
+        uses: actions/upload-artifact@master
+        with:
+          name: public
+              path: public
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: google-github-actions/auth@v0
+        with:
+          credentials_json: ${{ secrets.CREDENTIAL_JSON }}
+      - name: Download Artifact
+          uses: actions/download-artifact@master
+          with:
+            name: public
+      - name: firebase deploy
+        run: |
+          npx firebase use "okazaki-shogo-website"
+          npx firebase target:apply hosting firebase.json "https://okazaki-shogo-website.web.app"
+          npx firebase deploy --only hosting: firebase.json
