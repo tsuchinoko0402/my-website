@@ -24,7 +24,7 @@ jobs:
         uses: actions/upload-artifact@master
         with:
           name: public
-              path: public
+          path: public
   deploy:
     name: Deploy
     needs: build
@@ -34,9 +34,9 @@ jobs:
         with:
           credentials_json: ${{ secrets.CREDENTIAL_JSON }}
       - name: Download Artifact
-          uses: actions/download-artifact@master
-          with:
-            name: public
+        uses: actions/download-artifact@master
+        with:
+          name: public
       - name: firebase deploy
         run: |
           npx firebase use "okazaki-shogo-website"
