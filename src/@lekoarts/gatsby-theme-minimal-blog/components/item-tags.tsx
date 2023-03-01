@@ -24,7 +24,7 @@ const ItemTags = ({ tags }: TagsProps) => {
             variant="outlined"
             disableRipple
             href={replaceSlashes(`/${basePath}/${tagsPath}/${tag.slug}`)}
-            sx={({ fontSize: `0.7rem`, padding: `0.1rem 0.1rem`, textTransform: 'none'})}
+            sx={({ fontSize: `0.7rem`, padding: `0.01em 0.01em`, textTransform: 'none'})}
           >
             {tag.name}
           </Button>
