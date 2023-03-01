@@ -24,4 +24,4 @@ jobs:
         with:
           credentials_json: ${{ secrets.CREDENTIAL_JSON }}
       - name: firebase deploy
-        run: npx firebase deploy
+        run: npm run deploy
